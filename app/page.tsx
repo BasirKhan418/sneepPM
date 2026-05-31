@@ -53,7 +53,7 @@ export default function Home() {
         <header className="flex flex-col gap-8 rounded-4xl border border-white/60 bg-white/75 p-8 shadow-[0_30px_120px_-40px_rgba(15,23,42,0.45)] backdrop-blur md:p-12">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="inline-flex items-center gap-3 rounded-full border border-(--line-soft) bg-(--surface-1) px-4 py-2 text-sm font-medium text-(--ink-muted)">
-              <span className="h-2.5 w-2.5 rounded-full bg-(--accent)" />
+              <span className="h-2.5 w-2.5 rounded-full bg-accent" />
               Zira foundation scaffold
             </div>
             <div className="inline-flex items-center gap-2 rounded-full border border-(--line-soft) bg-background px-4 py-2 font-mono text-xs uppercase tracking-[0.24em] text-(--ink-soft)">

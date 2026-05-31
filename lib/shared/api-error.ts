@@ -1,4 +1,4 @@
-const apiErrorCodes = [
+export const apiErrorCodes = [
   "UNAUTHENTICATED",
   "FORBIDDEN",
   "NOT_FOUND",

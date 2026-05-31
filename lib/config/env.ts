@@ -168,7 +168,8 @@ export function parseEnv(source: NodeJS.ProcessEnv = process.env): Env {
 
   const auth = {
     jwtSecret: raw.JWT_SECRET ?? (isProduction ? "" : "dev-jwt-secret"),
-    nextAuthSecret: raw.NEXTAUTH_SECRET ?? (isProduction ? "" : "dev-nextauth-secret"),
+    nextAuthSecret:
+      raw.NEXTAUTH_SECRET ?? raw.JWT_SECRET ?? (isProduction ? "" : "dev-nextauth-secret"),
     passwordPepper: raw.PASSWORD_PEPPER ?? (isProduction ? "" : "dev-password-pepper"),
     cronSecret: raw.CRON_SECRET ?? (isProduction ? "" : "dev-cron-secret"),
   };

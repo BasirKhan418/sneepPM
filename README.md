@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zira
 
-## Getting Started
+Zira is a private internal work OS built on Next.js 16. This repository now includes the first production-oriented scaffold for the app shell, environment validation, service helpers, local infrastructure, and unit testing.
 
-First, run the development server:
+## Included Foundation
+
+- App Router shell with a Zira landing page and a health endpoint
+- Typed environment normalization with development defaults and production guards
+- MongoDB, Redis, S3, and SMTP helper modules
+- Docker Compose services for MongoDB and Redis
+- Vitest-based unit test setup
+
+## Local Setup
+
+1. Copy `.env.example` to `.env.local` and fill in real values.
+2. Start local infrastructure if needed:
+
+```bash
+docker compose up -d
+```
+
+3. Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev
+npm run lint
+npm run typecheck
+npm run test
+npm run build
+```
 
-## Learn More
+## Core Paths
 
-To learn more about Next.js, take a look at the following resources:
+- `app/` App Router pages and route handlers
+- `lib/config/` env parsing and normalization
+- `lib/db/` MongoDB connection helper
+- `lib/realtime/` Redis and queue clients
+- `lib/s3/` S3 presign helpers
+- `lib/email/` Nodemailer integration
+- `lib/shared/` shared errors and contracts
+- `tests/` unit test coverage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `.env.local` must stay uncommitted.
+- Production boots fail fast on missing required secrets.
+- The current codebase is the platform foundation, not the full Zira product surface yet.

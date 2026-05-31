@@ -10,7 +10,6 @@ const rawEnvSchema = z.object({
   GATEWAY_URL: z.string().trim().url().optional(),
   NEXT_PUBLIC_GATEWAY_URL: z.string().trim().url().optional(),
   JWT_SECRET: z.string().trim().min(1).optional(),
-  NEXTAUTH_SECRET: z.string().trim().min(1).optional(),
   PASSWORD_PEPPER: z.string().trim().min(1).optional(),
   CRON_SECRET: z.string().trim().min(1).optional(),
   MONGO_URI: z.string().trim().min(1).optional(),
@@ -59,7 +58,6 @@ export type Env = {
   };
   auth: {
     jwtSecret: string;
-    nextAuthSecret: string;
     passwordPepper: string;
     cronSecret: string;
   };
@@ -168,8 +166,6 @@ export function parseEnv(source: NodeJS.ProcessEnv = process.env): Env {
 
   const auth = {
     jwtSecret: raw.JWT_SECRET ?? (isProduction ? "" : "dev-jwt-secret"),
-    nextAuthSecret:
-      raw.NEXTAUTH_SECRET ?? raw.JWT_SECRET ?? (isProduction ? "" : "dev-nextauth-secret"),
     passwordPepper: raw.PASSWORD_PEPPER ?? (isProduction ? "" : "dev-password-pepper"),
     cronSecret: raw.CRON_SECRET ?? (isProduction ? "" : "dev-cron-secret"),
   };
@@ -180,7 +176,7 @@ export function parseEnv(source: NodeJS.ProcessEnv = process.env): Env {
     user: raw.EMAIL_USER ?? "",
     password: raw.EMAIL_PASSWORD ?? "",
     userV2: raw.EMAIL_USER_V2,
-    from: raw.EMAIL_FROM ?? "Zira <team@example.com>",
+    from: raw.EMAIL_FROM ?? (raw.EMAIL_USER_V2 ? `Zira <${raw.EMAIL_USER_V2}>` : "Zira <team@example.com>"),
   };
 
   const s3 = {
@@ -195,7 +191,6 @@ export function parseEnv(source: NodeJS.ProcessEnv = process.env): Env {
 
   requireInProduction(nodeEnv, [
     !auth.jwtSecret && "JWT_SECRET",
-    !auth.nextAuthSecret && "NEXTAUTH_SECRET",
     !auth.passwordPepper && "PASSWORD_PEPPER",
     !auth.cronSecret && "CRON_SECRET",
     !mongoUri && "MONGO_URI | MONGODB_URI",
